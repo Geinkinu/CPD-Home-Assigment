@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "136210628183",
+    "project_id": "home-assigment-be965",
+    "storage_bucket": "home-assigment-be965.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136210628183:android:d2cebcb57f9133da4bad12",
+        "android_client_info": {
+          "package_name": "com.example.home_assigment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxGGP8DbnQUjpTYO4uVekdwwAFBhtyNDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

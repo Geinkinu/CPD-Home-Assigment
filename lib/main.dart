@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:home_assigment/services/firebase_service.dart';
+import 'package:home_assigment/app/app.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FirebaseService.init();
+  runApp(const MyApp());
 }
