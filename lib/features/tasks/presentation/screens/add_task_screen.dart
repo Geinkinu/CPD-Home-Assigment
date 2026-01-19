@@ -47,16 +47,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
 
     TaskRepository.instance.add(task);
-
-    // Notification (do this after adding so even if it fails, the task is kept)
-    await NotificationService.instance.showNow(
-      title: 'Task saved',
-      body: 'Reminder: ${task.title}',
-    );
-
-    // Analytics: keep params primitive (Firebase expects int/double/string)
     await AnalyticsService.instance.logEvent('task_created', params: {
-      'has_photo': _imagePath == null ? 0 : 1,
+      'has_photo': _imagePath != null,
     });
 
     if (!mounted) return;
