@@ -26,9 +26,9 @@ class _TasksScreenState extends State<TasksScreen> {
   }
 
   Future<void> _openAddTask() async {
-    final result = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(builder: (_) => const AddTaskScreen()),
-    );
+    final result = await Navigator.of(
+      context,
+    ).push<bool>(MaterialPageRoute(builder: (_) => const AddTaskScreen()));
 
     if (result == true) {
       setState(() {});
@@ -80,12 +80,16 @@ class _TasksScreenState extends State<TasksScreen> {
                               width: 48,
                               height: 48,
                               fit: BoxFit.cover,
+                              cacheWidth: 96,
+                              cacheHeight: 96,
                             ),
                           ),
                     title: Text(t.title),
-                    subtitle: Text(t.imagePath == null
-                        ? 'TODO: No photo attached'
-                        : 'Photo attached'),
+                    subtitle: Text(
+                      t.imagePath == null
+                          ? 'TODO: No photo attached'
+                          : 'Photo attached',
+                    ),
                   );
                 },
               ),
