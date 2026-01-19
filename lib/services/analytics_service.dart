@@ -14,7 +14,18 @@ class AnalyticsService {
     await _analytics.logSignUp(signUpMethod: method);
   }
 
-  Future<void> logEvent(String name, {Map<String, Object>? params}) async {
-    await _analytics.logEvent(name: name, parameters: params);
+  Future<void> logLogout() async {
+    await _analytics.logEvent(name: 'logout');
+  }
+
+  Future<void> logTaskCreated({required bool hasPhoto}) async {
+    await _analytics.logEvent(
+      name: 'task_created',
+      parameters: {'has_photo': hasPhoto ? 1 : 0},
+    );
+  }
+
+  Future<void> logTaskPhotoCaptured() async {
+    await _analytics.logEvent(name: 'task_photo_captured');
   }
 }

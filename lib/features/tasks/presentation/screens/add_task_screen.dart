@@ -30,7 +30,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
     setState(() => _imagePath = photo.path);
 
-    await AnalyticsService.instance.logEvent('task_photo_captured');
+    await AnalyticsService.instance.logTaskPhotoCaptured();
   }
 
   Future<void> _save() async {
@@ -48,22 +48,18 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
       TaskRepository.instance.add(task);
 
-      // Notification (do this after adding so even if it fails, the task is kept)
       await NotificationService.instance.showNow(
         title: 'Task saved',
         body: 'Reminder: ${task.title}',
       );
 
-      // Analytics: keep params primitive (Firebase expects int/double/string)
-      await AnalyticsService.instance.logEvent(
-        'task_created',
-        params: {'has_photo': _imagePath == null ? 0 : 1},
+      await AnalyticsService.instance.logTaskCreated(
+        hasPhoto: _imagePath != null,
       );
 
       if (!mounted) return;
       Navigator.of(context).pop(true);
     } catch (e) {
-      // Show error and allow user to retry
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,

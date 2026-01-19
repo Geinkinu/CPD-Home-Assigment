@@ -16,7 +16,7 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   Future<void> _logout() async {
     await AuthService.instance.logout();
-    await AnalyticsService.instance.logEvent('logout');
+    await AnalyticsService.instance.logLogout();
 
     if (!mounted) return;
     Navigator.of(context).pushAndRemoveUntil(
