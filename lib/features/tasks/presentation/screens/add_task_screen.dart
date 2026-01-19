@@ -34,36 +34,44 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   Future<void> _save() async {
-  final title = _title.text.trim();
-  if (title.isEmpty) return;
+    final title = _title.text.trim();
+    if (title.isEmpty) return;
 
-  setState(() => _saving = true);
+    setState(() => _saving = true);
 
-  try {
-    final task = TaskModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: title,
-      imagePath: _imagePath,
-    );
+    try {
+      final task = TaskModel(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        title: title,
+        imagePath: _imagePath,
+      );
 
-    TaskRepository.instance.add(task);
-    await AnalyticsService.instance.logEvent('task_created', params: {
-      'has_photo': _imagePath != null,
-    });
+      TaskRepository.instance.add(task);
 
-    if (!mounted) return;
-    Navigator.of(context).pop(true);
-  } catch (e) {
-    // Show error and allow user to retry
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Failed to save task: $e')),
-    );
-  } finally {
-    if (mounted) setState(() => _saving = false);
+      // Notification (do this after adding so even if it fails, the task is kept)
+      await NotificationService.instance.showNow(
+        title: 'Task saved',
+        body: 'Reminder: ${task.title}',
+      );
+
+      // Analytics: keep params primitive (Firebase expects int/double/string)
+      await AnalyticsService.instance.logEvent(
+        'task_created',
+        params: {'has_photo': _imagePath == null ? 0 : 1},
+      );
+
+      if (!mounted) return;
+      Navigator.of(context).pop(true);
+    } catch (e) {
+      // Show error and allow user to retry
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to save task: $e')));
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
   }
-}
-
 
   @override
   void dispose() {
