@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:home_assigment/features/tasks/data/task_model.dart';
 import 'package:home_assigment/features/tasks/data/task_repository.dart';
 import 'package:home_assigment/services/analytics_service.dart';
+import 'package:home_assigment/services/notification_service.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -45,9 +46,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
 
     TaskRepository.instance.add(task);
-    await AnalyticsService.instance.logEvent('task_created', params: {
-      'has_photo': _imagePath != null,
-    });
+    await NotificationService.instance.showNow(
+      title: 'Task saved',
+      body: 'Reminder: ${task.title}',
+    );
+    await AnalyticsService.instance.logEvent(
+      'task_created',
+      params: {'has_photo': _imagePath != null},
+    );
 
     if (!mounted) return;
     Navigator.of(context).pop(true);
@@ -81,9 +87,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           children: [
             TextField(
               controller: _title,
-              decoration: const InputDecoration(
-                labelText: 'Task title',
-              ),
+              decoration: const InputDecoration(labelText: 'Task title'),
             ),
             const SizedBox(height: 16),
             preview,
