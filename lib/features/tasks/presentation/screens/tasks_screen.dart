@@ -58,8 +58,8 @@ class _TasksScreenState extends State<TasksScreen> {
         padding: const EdgeInsets.all(16),
         child: tasks.isEmpty
             ? const Text(
-                'TODO: Create your first task using the + button.\n'
-                'TODO: Tasks will later be persisted to Firestore.',
+                'Create your first task using the + button.\n'
+                'Tasks will later be persisted to Firestore.',
               )
             : ListView.separated(
                 itemCount: tasks.length,
@@ -87,7 +87,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     title: Text(t.title),
                     subtitle: Text(
                       t.imagePath == null
-                          ? 'TODO: No photo attached'
+                          ? 'No photo attached'
                           : 'Photo attached',
                     ),
                   );

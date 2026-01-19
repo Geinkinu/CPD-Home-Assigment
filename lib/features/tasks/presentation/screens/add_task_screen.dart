@@ -122,9 +122,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             const SizedBox(height: 16),
 
-            // TODO: Later persist tasks to Firestore and store image in Firebase Storage.
             const Text(
-              'TODO: Persist tasks to Firestore + store images in Firebase Storage',
+              'Persist tasks to Firestore + store images in Firebase Storage',
             ),
           ],
         ),
