@@ -17,8 +17,6 @@ class NotificationService {
   Future<void> requestAndroidPermissionIfNeeded() async {
     final android = _plugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
-
-    // On Android 13+ this prompts the user. On older versions it does nothing.
     await android?.requestNotificationsPermission();
   }
 
